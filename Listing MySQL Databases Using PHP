@@ -1,0 +1,37 @@
+<html>
+   <head><title>Listing MySQL Databases</title></head>
+   <body>
+      <?php
+         // Connection details
+         $dbhost = 'localhost';
+         $dbuser = 'root';
+         $dbpass = 'root@123';
+
+         // Create a connection to the MySQL server
+         $mysqli = new mysqli($dbhost, $dbuser, $dbpass);
+
+         // Check the connection
+         if ($mysqli->connect_errno) {
+            printf("Connect failed: %s<br />", $mysqli->connect_error);
+            exit();
+         }
+         printf('Connected successfully to MySQL server.<br />');
+
+         // Query to show databases
+         $result = $mysqli->query("SHOW DATABASES");
+
+         // Check if the query was successful
+         if ($result) {
+            printf("List of Databases:<br />");
+            while ($row = $result->fetch_array()) {
+                printf("- %s<br />", $row[0]);
+            }
+         } else {
+            printf("Could not retrieve databases: %s<br />", $mysqli->error);
+         }
+
+         // Close the connection
+         $mysqli->close();
+      ?>
+   </body>
+</html>
